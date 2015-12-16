@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="nbaApp">
+<head>
+  <meta charset="UTF-8">
+   <title>NBA App</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <style type="text/css">
+
+   body {
+     width: 1000px;
+     margin: 0 auto;
+   }
+
+
+   li {
+     display: inline-block;
+   }
+
+   #playerName {
+     /*margin-top: px;*/
+   }
+
+   .axis path,
+   .axis line {
+     fill: none;
+     stroke: black;
+     shape-rendering: crispEdges;
+   }
+
+   .axis text {
+     font-family: sans-serif;
+     font-size: 11px;
+   }
+
+   h5 {
+     text-align: left;
+   }
+
+
+
+  </style>
+</head>
+<body>
+  <section class="container" ng-controller="nbaCtrl">
+
+
+      <script type="text/javascript">
+        function createGraph (playerData) {
+            var w = 1000;
+            var h = 340;
+            var padding = 30;
+            var dataset = playerData;
+
+            //Scale functions
+            var xScale = d3.scale.linear()
+                       .domain([3.75, d3.max(dataset, function(d) { return d[14]; })])
+                       .range([padding, w - padding * 2]);
+
+            var yScale = d3.scale.linear()
+                       .domain([0.9, d3.max(dataset, function(d) { return d[11]; })])
+                       .range([h - padding, padding]);
+
+            var rScale = d3.scale.linear()
+                       .domain([10, d3.max(dataset, function(d) { return d[16]; })])
+                       .range([4, 20]);
+
+            //Define X axis
+            var xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom")
+                        .ticks(5);
+
+            //Define Y axis
+            var yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left")
+                        .ticks(5);
+
+            //Create SVG element
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h)
+                        .attr("class", "svg-container")
+
+            var tooltip = d3.select("body")
+                            .append("div")
+                            .attr("class", "tooltip hidden")
+
+            var tooltip = d3.select('body')
+                  .append('div')
+                  .attr('class', 'tooltip hidden')
+                  .style("opacity", 0);
+
+            //Create circles
+            svg.selectAll("circle")
+                       .data(dataset)
+                       .enter()
+                       .append("circle")
+                       .attr("cx", function(d) {
+                          return xScale(d[14]);
+                       })
+                       .attr("cy", function(d) {
+                          return yScale(d[11]);
+                       })
+                       .attr("r", function(d) {
+                          return rScale(d[16]);
+                       })
+                       .attr("ppg", function (d) {
+                          return d[16];
+                       })
+                       .attr("name", function (d){
+                          return d[1];
+                       })
+                       .attr("min", function (d){
+                          return d[17];
+                       })
+                       .attr("fgPct", function (d){
+                          return d[18];
+                       })
+                       .attr("threePct", function (d){
+                          return d[19];
+                       })
+                       .attr("ftPct", function (d){
+                          return d[20];
+                       })
+                       .attr("reb", function (d){
+                          return d[21];
+                       })
+                       .attr("ast", function (d){
+                          return d[22];
+                       })
+                       .attr("fill", function (d) {
+                         return d[23];
+                       })
+                       .attr("stroke", function (d) {
+                         return d[24];
+                       })
+                       .attr("opacity", function(d){
+                         if (d[1] == "Stephen Curry") {
+                           return 1;
+                         } else {
+                           return 0.3;
+                         }
+                       })
+                       .attr("stroke-width", 3)
+                       .on("mouseover", handleMouseOver)
+                       .on("mouseout", handleMouseOut)
+
+            function handleMouseOut(){
+              d3.select(this)
+              .attr("fill", function (d) {
+                return d[23];
+              })
+              .attr("opacity", function(d){
+                if (d[1] == "Stephen Curry") {
+                  return 1;
+                } else {
+                  return 0.3;
+                }
+              })
+
+              $("#playerName").text("Keeping Up With Curry?");
+              $("#playerScore").text("");
+              $("#playerMin").text("");
+              $("#playerFG").text("");
+              $("#playerThrees").text("");
+              $("#playerFT").text("");
+              $("#playerReb").text("");
+              $("#playerAst").text("");
+
+            }
+
+            function handleMouseOver(){
+              d3.select(this)
+              .attr("opacity", 1)
+            $("#playerName").text(d3.select(this).attr("name"));
+            $("#playerScore").text("PPG: " + d3.select(this).attr("ppg") + ",");
+            $("#playerMin").text("MIN: " + d3.select(this).attr("min") + ",");
+            $("#playerFG").text("FG%: " + d3.select(this).attr("fgPct") + ",");
+            $("#playerThrees").text("3PT%: " + d3.select(this).attr("threePct") + ",");
+            $("#playerFT").text("FT%: " + d3.select(this).attr("ftPct") + ",");
+            $("#playerReb").text("REB: " + d3.select(this).attr("reb") + ",");
+            $("#playerAst").text("AST: " + d3.select(this).attr("ast"));
+
+            }
+
+            //Create X axis
+            svg.append("g")
+              .attr("class", "axis")
+              .attr("transform", "translate(0," + (h - padding) + ")")
+              .call(xAxis)
+
+            //Create Y axis
+            svg.append("g")
+              .attr("class", "axis")
+              .attr("transform", "translate(" + padding + ",0)")
+              .call(yAxis)
+        };
+
+  </script>
+
+    <h2 id="playerName">Keeping Up With Curry?</h2>
+    <li id="playerScore"></li>
+    <li id="playerMin"></li>
+    <li id="playerFG"></li>
+    <li id="playerThrees"></li>
+    <li id="playerFT"></li>
+    <li id="playerReb"></li>
+    <li id="playerAst"></li>
+
+</section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <br>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="col-md-6">
+        <br>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <input type="text" name="firstname">
+        <input class="btn-sm" type="submit" value="Submit">
+      </div>
+    </div>
+    <h5>Comparing Movement & Points Scored</h5>
+  </div>
+
+  <script type="text/javascript" src="/d3/d3.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.js"></script>
+  <script src="/app.js"></script>
+  <script src="/controllers/NbaStatsController.js"></script>
+</body>
+</html>

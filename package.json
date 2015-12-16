@@ -1,0 +1,27 @@
+{
+  "name": "nba_stat_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noah-springwater/NBA_Statistics_Project.git"
+  },
+  "author": "Noah Springwater",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noah-springwater/NBA_Statistics_Project/issues"
+  },
+  "homepage": "https://github.com/noah-springwater/NBA_Statistics_Project#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "e": "0.0.4",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}
