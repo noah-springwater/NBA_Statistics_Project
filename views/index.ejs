@@ -11,15 +11,25 @@
      margin: 0 auto;
    }
 
+   .x-axis {
+     font-size: 12px;
+   }
+
+   .y-axis {
+     font-size: 12px;
+   }
+
+   h5 {
+     padding-top: 15px;
+   }
 
    li {
      display: inline-block;
    }
 
-   #playerName {
-     /*margin-top: px;*/
+   p {
+     font-size: 12px;
    }
-
    .axis path,
    .axis line {
      fill: none;
@@ -34,8 +44,12 @@
 
    h5 {
      text-align: left;
+
    }
 
+   form {
+      padding-top: 15px
+   }
 
 
   </style>
@@ -46,9 +60,9 @@
 
       <script type="text/javascript">
         function createGraph (playerData) {
-            var w = 1000;
-            var h = 340;
-            var padding = 30;
+            var w = 1020;
+            var h = 385;
+            var padding = 35;
             var dataset = playerData;
 
             //Scale functions
@@ -130,6 +144,12 @@
                        .attr("ast", function (d){
                           return d[22];
                        })
+                       .attr("spd", function (d){
+                         return d[14]
+                       })
+                       .attr("dist", function (d){
+                         return d[11]
+                       })
                        .attr("fill", function (d) {
                          return d[23];
                        })
@@ -168,6 +188,8 @@
               $("#playerFT").text("");
               $("#playerReb").text("");
               $("#playerAst").text("");
+              $("#playerSpd").text("");
+              $("#playerDist").text("");
 
             }
 
@@ -182,6 +204,8 @@
             $("#playerFT").text("FT%: " + d3.select(this).attr("ftPct") + ",");
             $("#playerReb").text("REB: " + d3.select(this).attr("reb") + ",");
             $("#playerAst").text("AST: " + d3.select(this).attr("ast"));
+            $("#playerSpd").text("Speed on Offense: " + d3.select(this).attr("spd") + "," );
+            $("#playerDist").text("Distance on Offense: " + d3.select(this).attr("dist") + ",");
 
             }
 
@@ -191,16 +215,34 @@
               .attr("transform", "translate(0," + (h - padding) + ")")
               .call(xAxis)
 
+            svg.append("text")      // text label for the x axis
+              .attr("x", 855 )
+              .attr("y", 340 )
+              .attr("class", "x-axis")
+              .style("text-anchor", "middle")
+              .text("Avg. Speed on Offense/Game (mph)");
+
             //Create Y axis
             svg.append("g")
               .attr("class", "axis")
               .attr("transform", "translate(" + padding + ",0)")
               .call(yAxis)
+
+              svg.append("text")    // text label for the y axis
+                .attr("x", -130 )
+                .attr("y", 8.80 )
+                .attr("class", "y-axis")
+                .attr("transform", "rotate(-90)")
+                .style("text-anchor", "middle")
+                .text("Distance on Offensive/Game (miles)");
+
         };
 
   </script>
 
     <h2 id="playerName">Keeping Up With Curry?</h2>
+    <li id="playerSpd"></li>
+    <li id="playerDist"></li>
     <li id="playerScore"></li>
     <li id="playerMin"></li>
     <li id="playerFG"></li>
@@ -215,19 +257,20 @@
       <div class="col-md-6">
         <br>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h5>Comparing Movement & Points Scored</h5>
       </div>
       <div class="col-md-6">
         <br>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <input type="text" name="firstname">
-        <input class="btn-sm" type="submit" value="Submit">
+        <form name="myform" onSubmit="return handleClick()">
+           <input name="Submit"  type="submit" value="Compare Player" >
+           <input type="text" id="myVal" placeholder="Add some text">
+       </form>
       </div>
     </div>
-    <h5>Comparing Movement & Points Scored</h5>
   </div>
 
   <script type="text/javascript" src="/d3/d3.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.js"></script>

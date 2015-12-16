@@ -101,8 +101,8 @@ function nbaCtrl($http, $log) {
 
   self.memphisGrizzlies = {
     team: "MEM",
-    primaryColor: '#0F586C',
-    secondaryColor: '#7399C6'
+    primaryColor: '#7399C6',
+    secondaryColor: '#BED4E9'
   },
 
   self.miamiHeat = {
@@ -138,7 +138,7 @@ function nbaCtrl($http, $log) {
   self.oklahomacityThunder = {
     team: "OKC",
     primaryColor: '#007DC3',
-    secondaryColor: '#FDBB30'
+    secondaryColor: '#F05133'
   },
 
   self.orlandoMagic = {
