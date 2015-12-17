@@ -10,7 +10,7 @@ function NbaCtrl($scope, $http, $log) {
   console.log(self);
 
   self.allstars = ["LeBron James", "John Wall", "Kyle Lowry", "Carmelo Anthony", "Jeff Teague", "Jimmy Butler", "Dwyane Wade", "Kyle Korver", "Stephen Curry", "Kobe Bryant", "James Harden", "Klay Thompson", "Russell Westbrook", "Kevin Durant", "Chris Paul", "Damian Lillard", "Pau Gasol", "Al Horford", "Paul Millsap", "Chris Bosh", "Anthony Davis", "Marc Gasol", "Blake Griffin", "LaMarcus Aldridge", "Tim Duncan", "Dirk Nowitzki"];
-  // "Derrick Rose", "Jose Calderon", "Isaiah Canaan", "Kristaps Porzingis", "Rajon Rondo", "Isaiah Thomas", "Joe Johnson", "Isaiah Canaan", "Jahlil Okafor", "Andre Drummond", "Paul George", "Khris Middleton", "Nicolas Batum", "Victor Oladipo", "Kenneth Faried", "Ricky Rubio", "Gordon Hayward", "Eric Bledsoe", "Rudy Gay", 
+  // "Derrick Rose", "Jose Calderon", "Isaiah Canaan", "Kristaps Porzingis", "Rajon Rondo", "Isaiah Thomas", "Joe Johnson", "Isaiah Canaan", "Jahlil Okafor", "Andre Drummond", "Paul George", "Khris Middleton", "Nicolas Batum", "Victor Oladipo", "Kenneth Faried", "Ricky Rubio", "Gordon Hayward", "Eric Bledsoe", "Rudy Gay",
   self.allstarInfo = [];
   allPlayers();
 
@@ -28,7 +28,7 @@ function NbaCtrl($scope, $http, $log) {
   self.bostonCeltics = {
     team: "BOS",
     primaryColor: '#05854C',
-    secondaryColor: '#EAEFE9'
+    secondaryColor: '#BB9753'
   },
 
   self.brooklynNets = {
@@ -199,12 +199,6 @@ function NbaCtrl($scope, $http, $log) {
     secondaryColor: '#E31837'
   }
 ];
-//
-// self.hello = function(){
-//   console.log("hello");
-// }
-// debugger;
-
 
 function allPlayers() {
   $http({
@@ -227,11 +221,9 @@ function getAllStars(){
       if (allPlayerInfo[i][1] == self.allstars[j]){
         self.allstarInfo.push(allPlayerInfo[i]);
       }
-
     }
-
   }
-  allPlayerPts();
+allPlayerPts();
 };
 
 
@@ -270,7 +262,7 @@ function getAllStarsPts(){
       }
     }
   }
-  getColors();
+getColors();
 }
 
 function getColors(){
@@ -280,18 +272,15 @@ function getColors(){
         self.allstarInfo[i].push(self.teamColors[j].primaryColor);
         self.allstarInfo[i].push(self.teamColors[j].secondaryColor);
       }
+    }
   }
-}
-// debugger;
 createGraph(self.allstarInfo);
 }
 
 $scope.addInput = function(){
   d3.selectAll("svg").remove();
   playerNew = $("#player-value").val()
-  self.allstars.push($("#player-value").val());
+  self.allstars.push(playerNew);
   getAllStars();
-
-}
-
+  }
 };
