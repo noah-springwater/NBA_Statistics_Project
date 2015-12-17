@@ -1,18 +1,22 @@
 'use strict'
 
-nbaApp.controller("nbaCtrl", ["$http", "$log", nbaCtrl]);
+nbaApp.controller("NbaCtrl", ["$scope", "$http", "$log", NbaCtrl]);
 
-function nbaCtrl($http, $log) {
+function NbaCtrl($scope, $http, $log) {
   $log.info("Inside controller");
   var self = this
 
-  self.allstars = ["LeBron James", "John Wall", "Kyle Lowry", "Carmelo Anthony", "Jeff Teague", "Jimmy Butler", "Dwyane Wade", "Kyle Korver", "Stephen Curry", "Kobe Bryant", "James Harden", "Klay Thompson", "Russell Westbrook", "Kevin Durant", "Chris Paul", "Damian Lillard", "Pau Gasol", "Al Horford", "Paul Millsap", "Chris Bosh", "Anthony Davis", "Marc Gasol", "Blake Griffin", "LaMarcus Aldridge", "Tim Duncan", "Dirk Nowitzki"];
 
+  console.log(self);
+
+  self.allstars = ["LeBron James", "John Wall", "Kyle Lowry", "Carmelo Anthony", "Jeff Teague", "Jimmy Butler", "Dwyane Wade", "Kyle Korver", "Stephen Curry", "Kobe Bryant", "James Harden", "Klay Thompson", "Russell Westbrook", "Kevin Durant", "Chris Paul", "Damian Lillard", "Pau Gasol", "Al Horford", "Paul Millsap", "Chris Bosh", "Anthony Davis", "Marc Gasol", "Blake Griffin", "LaMarcus Aldridge", "Tim Duncan", "Dirk Nowitzki"];
+  // "Derrick Rose", "Jose Calderon", "Isaiah Canaan", "Kristaps Porzingis", "Rajon Rondo", "Isaiah Thomas", "Joe Johnson", "Isaiah Canaan", "Jahlil Okafor", "Andre Drummond", "Paul George", "Khris Middleton", "Nicolas Batum", "Victor Oladipo", "Kenneth Faried", "Ricky Rubio", "Gordon Hayward", "Eric Bledsoe", "Rudy Gay", 
   self.allstarInfo = [];
   allPlayers();
 
   var allPlayerInfo;
   var allPlayerInfoPts;
+  var playerNew;
 
   self.teamColors = [
     self.atlantaHawks = {
@@ -195,9 +199,11 @@ function nbaCtrl($http, $log) {
     secondaryColor: '#E31837'
   }
 ];
-
-
-
+//
+// self.hello = function(){
+//   console.log("hello");
+// }
+// debugger;
 
 
 function allPlayers() {
@@ -267,7 +273,7 @@ function getAllStarsPts(){
   getColors();
 }
 
-function getColors() {
+function getColors(){
   for (var i = 0; i < self.allstarInfo.length; i++) {
     for (var j = 0; j < self.teamColors.length; j++) {
       if (self.allstarInfo[i][3] == self.teamColors[j].team){
@@ -279,4 +285,13 @@ function getColors() {
 // debugger;
 createGraph(self.allstarInfo);
 }
+
+$scope.addInput = function(){
+  d3.selectAll("svg").remove();
+  playerNew = $("#player-value").val()
+  self.allstars.push($("#player-value").val());
+  getAllStars();
+
+}
+
 };
