@@ -14,6 +14,7 @@ function NbaCtrl($scope, $http, $log) {
   self.allstarInfo = [];
   allPlayers();
 
+
   var allPlayerInfo;
   var allPlayerInfoPts;
   var playerNew;

@@ -63,6 +63,7 @@
             var w = 1020;
             var h = 385;
             var padding = 49;
+            //player data
             var dataset = playerData;
 
             //Scale functions
@@ -97,14 +98,6 @@
                         .attr("height", h)
                         .attr("class", "svg-container")
 
-            var tooltip = d3.select("body")
-                            .append("div")
-                            .attr("class", "tooltip hidden")
-
-            var tooltip = d3.select('body')
-                  .append('div')
-                  .attr('class', 'tooltip hidden')
-                  .style("opacity", 0);
 
             //Create circles
             svg.selectAll("circle")
@@ -215,7 +208,8 @@
               .attr("transform", "translate(0," + (h - padding) + ")")
               .call(xAxis)
 
-            svg.append("text")      // text label for the x axis
+            //label for the x axis
+            svg.append("text")
               .attr("x", 827 )
               .attr("y", 327 )
               .attr("class", "x-axis")
@@ -228,13 +222,14 @@
               .attr("transform", "translate(" + padding + ",0)")
               .call(yAxis)
 
-              svg.append("text")    // text label for the y axis
-                .attr("x", -146 )
-                .attr("y", 15 )
-                .attr("class", "y-axis")
-                .attr("transform", "rotate(-90)")
-                .style("text-anchor", "middle")
-                .text("Distance on Offensive/Game (miles)");
+              // text label for the y axis
+            svg.append("text")
+              .attr("x", -146 )
+              .attr("y", 15 )
+              .attr("class", "y-axis")
+              .attr("transform", "rotate(-90)")
+              .style("text-anchor", "middle")
+              .text("Distance on Offensive/Game (miles)");
 
         };
 
