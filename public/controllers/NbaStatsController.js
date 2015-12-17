@@ -201,6 +201,13 @@ function NbaCtrl($scope, $http, $log) {
   }
 ];
 
+$scope.addInput = function(){
+  d3.selectAll("svg").remove();
+  playerNew = $("#player-value").val()
+  self.allstars.push(playerNew);
+  getAllStars();
+}
+
 function allPlayers() {
   $http({
     method: 'JSONP',
@@ -278,10 +285,4 @@ function getColors(){
 createGraph(self.allstarInfo);
 }
 
-$scope.addInput = function(){
-  d3.selectAll("svg").remove();
-  playerNew = $("#player-value").val()
-  self.allstars.push(playerNew);
-  getAllStars();
-  }
 };
